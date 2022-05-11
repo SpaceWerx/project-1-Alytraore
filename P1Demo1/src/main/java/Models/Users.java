@@ -9,9 +9,17 @@ public class Users {
 	private String password;
 	private Roles role;
 	
-	public Users() {
 	
+	public Users() {
+		super();
 		// TODO Auto-generated constructor stub
+	}
+	public Users(int id, String userName, String password, Roles role) {
+		super();
+		Id = id;
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
 	}
 	public int getId() {
 		return Id;
