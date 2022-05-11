@@ -83,14 +83,166 @@ public void handlePortal(Roles role) {
 	}
 	Users employee = User_Services.getUserById(userChoice);//change in userservice method body
 	
-	/*if(role == Roles.Manager) {
+	if(role == Roles.Manager) {
 		System.out.println("Opening Manager Portal for " + employee.getUserName());
 		displayFinanceManagerMenu(employee);
 	} else {
 		System.out.println("Opening Employee Portal for " + employee.getUserName());
 		displayEmployeeMenu(employee);
-	}*/
+	}
 	
+}
+
+/////////////////////////////////////////////////////////
+public void displayPreviousRequest(Users employee) {
+
+List<Reimbursement> reimbursements = rService.getReimbursementsByAuthor(employee.getId());
+
+if(reimbursements.isEmpty()) {
+System.out.println("No Previous Request..");
+System.out.println("Returning to Previous Menu...");
+}
+for (Reimbursement r : reimbursements) {
+System.out.println(r);
+}
+}
+///////////////////////////////////////////////////////////////
+public void submitReimbursement(Users employee) {
+Reimbursement reimbursementToBeSubmitted = new Reimbursement();
+reimbursementToBeSubmitted.setAuthor(employee.getId());
+
+System.out.println("What type of reimbursement would you like to submit?");
+System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
+System.out.println("1 -> Lodging");
+System.out.println("2 -> Travel");
+System.out.println("3 -> Food");
+System.out.println("4 -> Other");
+
+int typeDecision = promptSelection(1, 2, 3, 4); //check if valid entries necessary
+
+switch(typeDecision) {
+case 1:
+reimbursementToBeSubmitted.setType(Reimbursement_Type.Lodging);
+break;
+case 2:
+reimbursementToBeSubmitted.setType(Reimbursement_Type.Travel);
+break;
+case 3:
+reimbursementToBeSubmitted.setType(Reimbursement_Type.Food);
+break;
+case 4:
+reimbursementToBeSubmitted.setType(Reimbursement_Type.Other);
+break;
+}
+System.out.println("Please enter the dollar amount you are requesting to be reimbursed: ");
+System.out.print("$");
+
+reimbursementToBeSubmitted.setAmount(parseDoubleInput(fetchInput()));
+
+if (reimbursementToBeSubmitted.getAmount()<= 0) {
+System.out.println("Invalid Amount has been entered, please input a correct dollar amount.");
+boolean valid = false;
+while(!valid) {
+reimbursementToBeSubmitted.setAmount(parseDoubleInput(fetchInput()));
+if (reimbursementToBeSubmitted.getAmount() != 0) {
+valid = true;
+}
+}
+}
+System.out.println("Please enter a description/reason for your reimbursement request.");
+
+reimbursementToBeSubmitted.setDescription(scan.nextLine());
+if(reimbursementToBeSubmitted.getDescription().trim().equals("")) {
+System.out.println("You cannot submit a request with an empty description, please explain the reason for your request.");
+boolean valid = false;
+while(!valid) {
+reimbursementToBeSubmitted.setDescription(scan.nextLine());
+if(!reimbursementToBeSubmitted.getDescription().trim().equals("")) {
+valid = true;
+}
+
+}
+}
+rService.submitReimbursement(reimbursementToBeSubmitted);
+}
+/////////////////////////////////////////////
+public void displayPendingReimbursements() {
+List<Reimbursement> pendingReimbursements = rService.getPendingReimbursements();
+
+if(pendingReimbursements.isEmpty()) {
+System.out.println("No Pending Requests...");
+System.out.println("Returning to Previous Menu...");
+}
+for(Reimbursement r : pendingReimbursements) {
+System.out.println(r);
+}
+}
+
+///////////////////////////////////////////////
+public void displayResolvedReimbursements() {
+List<Reimbursement> resolvedReimbursements = rService.getResolvedReimbursements();
+
+if(resolvedReimbursements.isEmpty()) {
+System.out.println("No Resolved Requests...");
+System.out.println("Returning to Previous Menu...");
+}
+for(Reimbursement r: resolvedReimbursements) {
+System.out.println(r);
+}
+}
+
+//////////////////////////////////////////////
+public void processReimbursement(Users manager) {
+boolean processPortal = true;
+System.out.println("---------------------------------------");
+System.out.println("Welcome to the Manager Processing Portal" + manager.getUserName());
+System.out.println("---------------------------------------");
+System.out.println();
+
+while(processPortal) {
+List<Reimbursement> reimbursements = rService.getPendingReimbursements();
+
+if (reimbursements.isEmpty()) {
+System.out.println("There are no reimbursemetns to process.");
+System.out.println("Returning to previous menu...");
+return;
+}
+int[] ids = new int[reimbursements.size()];
+for (int i = 0; i< reimbursements.size(); i++) {
+Reimbursement r = reimbursements.get(i);
+Users author = User_Services.getUserById(r.getAuthor());
+System.out.println(r.getId() + " -> " + author.getUserName() + " : $" + r.getAmount());
+ids[i] = r.getId();
+}
+
+System.out.println("Please enter the ID of the Reimbursement you wish to process.");
+
+int selection = promptSelection(ids);
+Reimbursement reimbursementToBeProcessed = rService.getReimbursementById(selection);
+System.out.println("Processing reimbursement #" + reimbursementToBeProcessed.getId());
+System.out.println("Details\nAuthor: " + User_Services.getUserById(reimbursementToBeProcessed.getAuthor()).getUserName()
++ "\nAmount: " + reimbursementToBeProcessed.getAmount()
++ "\nDescription: " + reimbursementToBeProcessed.getDescription());
+System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
+System.out.println("1 -> Approve");
+System.out.println("2 -> Deny");
+
+int decision = promptSelection(1, 2);
+Status status = (decision == 1) ? Status.Approved : Status.Denied;
+rService.update(reimbursementToBeProcessed, manager.getId(), status);
+
+System.out.println("Would you like to process anohter reimbursement?");
+System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
+System.out.println("1 -> Yes");
+System.out.println("2 -> No");
+
+int lastChoice = promptSelection(1, 2);
+
+if (lastChoice == 2) {
+processPortal=false;
+}
+
+}
 }
 
 /////////////////////////////////////////////
@@ -123,6 +275,74 @@ public void displayMenu() {
 }
 
 /////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+public void displayEmployeeMenu(Users employee) {
+boolean employeePortal = true;
 
+System.out.println("---------------------------------------");
+System.out.println("Welcom to the Employee Portal, " + employee.getUserName());
+System.out.println("---------------------------------------");
+System.out.println();
+
+while (employeePortal) {
+
+System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
+System.out.println("1 -> View Previous Requests");
+System.out.println("2 -> Submit a Reimbursement");
+System.out.println("0 -> Return to Main Menu");
+
+int firstChoice = promptSelection(1,2,0);//lookthisup, also verify "validentries" isnt required
+
+switch(firstChoice) {
+case 1:
+displayPreviousRequest(employee);
+break;
+case 2:
+submitReimbursement(employee);
+break;
+case 0:
+System.out.println("Returning to Main Menu...");
+employeePortal = false;
+break;
+}
+}
 
 }
+//////////////////////////////////////////////////////////
+public void displayFinanceManagerMenu(Users manager) {
+boolean managerPortal = true;
+
+System.out.println("---------------------------------------");
+System.out.println("Welcom to the Manager Portal, " + manager.getUserName());
+System.out.println("---------------------------------------");
+System.out.println();
+
+while (managerPortal) {
+
+System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
+System.out.println("1 -> View All Pending Reimbursements");
+System.out.println("2 -> View All Resolved Reimbursements");
+System.out.println("3 -> Process a Reimbursement");
+System.out.println("0 -> Return to Main Menu");
+
+int firstChoice = promptSelection(1,2,3,0);//lookthisup
+
+switch(firstChoice) {
+case 1:
+displayPendingReimbursements();
+break;
+case 2:
+displayResolvedReimbursements();
+break;
+case 3:
+processReimbursement(manager);
+case 0:
+System.out.println("Returning to Main Menu...");
+managerPortal = false;
+break;
+}
+}
+
+}
+}
+
