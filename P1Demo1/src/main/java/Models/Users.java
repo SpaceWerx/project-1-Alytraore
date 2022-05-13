@@ -9,7 +9,7 @@ public class Users {
 	private String password;
 	private Roles role;
 	
-	
+	 
 	public Users() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -16,7 +16,7 @@ public class Reimbursement {
 		// TODO Auto-generated constructor stub
 	}
 	public Reimbursement(int id, int author, int resolver, String description, Reimbursement_Type type,
-			Status status, int amount) {
+			Status status, double amount) {
 		super();
 		this.id = id;
 		Author = author;
