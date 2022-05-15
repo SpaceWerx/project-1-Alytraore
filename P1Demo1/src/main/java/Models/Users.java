@@ -39,10 +39,10 @@ public class Users {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Roles getRole() {
+	public Roles getRoles() {
 		return role;
 	}
-	public void setRole(Roles role) {
+	public void setRoles(Roles role) {
 		this.role = role;
 	}
 	

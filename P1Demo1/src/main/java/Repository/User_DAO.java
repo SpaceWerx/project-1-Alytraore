@@ -17,11 +17,11 @@ import Utilities.ConnectionFactoryUtility;
 
 public class User_DAO {
 	
-	public Users getUserId( int Id) {
+	public static Users getUserId( int Id) {
 		
 		try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			
-			String sql = "select * from ers_users WHERE id = ?";
+			String sql = "select * from ers_users where id = ?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, Id);
@@ -41,17 +41,12 @@ public class User_DAO {
 			
 			System.out.println("Something went wrong obtaining your List!");
 			e.printStackTrace();
-		}
-		
-		//Fail-safe if the try-catch block does not run
+		}	
 		return null;
-
 }
-			
-			
-		
+//////////////////////////////////////////////////////////////////////////				
 	
-	public static Users getByUsername(String userName) {
+	public static Users getByUserName(String userName) {
 try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			
 			String sql = "select * from ers_users WHERE userName = ?";
@@ -61,13 +56,11 @@ try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if (resultSet.next()) {
-				
 				return new Users(
 						resultSet.getInt("Id"),
 						resultSet.getString("userName"),
 						resultSet.getString("password"),
 						Roles.valueOf(resultSet.getString("role"))
-						
 						);
 			}
 		} catch (SQLException e) {
@@ -75,13 +68,9 @@ try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			System.out.println("Something went wrong obtaining your List!");
 			e.printStackTrace();
 		}
-		
-		//Fail-safe if the try-catch block does not run
-		
-		
-		return null;
-	
+			return null;
 	}
+	////////////////////////////////////////////////////////////////////////////////////////
 	public static int create(Users user) {
 		try(Connection connection = ConnectionFactoryUtility.getConnection()){
 		
@@ -90,15 +79,13 @@ try(Connection connection = ConnectionFactoryUtility.getConnection()){
 					+ "RETURNING ers_users.id";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
-			//
 			preparedStatement.setString( 1, user.getUserName());
 			preparedStatement.setString(2, user.getPassword());
-			preparedStatement.setObject(3, user.getRole());
+			preparedStatement.setObject(3, user.getRoles());
 			
 			ResultSet resultSet;
 			
 			if((resultSet = preparedStatement.executeQuery()) != null) {
-				
 				resultSet.next();
 				//finally returning the new id
 				return resultSet.getInt(1);
@@ -107,13 +94,10 @@ try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			System.out.print("Creating user has failed");
 			e.printStackTrace();
 		}
-		// Fail-safe if the try-catch block does not run
-			
-		return 0;
-		
-	
+		return 0;	
 	}
-	public List<Users> getAllUsers() {
+	/////////////////////////////////////////////////////////////////////////
+	public static List<Users> getAllUsers() {
 		try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			List<Users> users = new ArrayList<>();
 			
@@ -129,22 +113,14 @@ try(Connection connection = ConnectionFactoryUtility.getConnection()){
 						resultSet.getString("userName"),
 						resultSet.getString("password"),
 						Roles.valueOf(resultSet.getString("role"))
-						));
-						
-				
+						));				
 			}
-			
 			return users;
-		
 		} catch (SQLException sqlException) {
 			System.out.println("Something went wrong with the database!");
 			sqlException.printStackTrace();
-		}
-		
-		//Fail-safe if the try-catch block does not run
-		
+		}	
 		return null;
-		
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import javax.management.relation.Role;
 
+import Models.EmployeeMenu;
+import Models.ManagerMenu;
 import Models.Reimbursement;
 import Models.Reimbursement_Type;
 import Models.Roles;
@@ -14,6 +16,9 @@ import Models.Users;
 public class CLI_Menu_Service {
 	
 	Reimbursement_Services rService = new Reimbursement_Services();
+	ManagerMenu mm = new ManagerMenu();
+	EmployeeMenu em = new EmployeeMenu();
+	Auth_Services au = new Auth_Services();
 	///////////////////////////
 	Scanner scan = new Scanner(System.in);
 	public String fetchInput() {
@@ -85,10 +90,10 @@ public void handlePortal(Roles role) {
 	
 	if(role == Roles.Manager) {
 		System.out.println("Opening Manager Portal for " + employee.getUserName());
-		displayFinanceManagerMenu(employee);
+		//displayFinanceManagerMenu(employee);
 	} else {
 		System.out.println("Opening Employee Portal for " + employee.getUserName());
-		displayEmployeeMenu(employee);
+		//displayEmployeeMenu(employee);
 	}
 	
 }
@@ -247,6 +252,7 @@ processPortal=false;
 
 /////////////////////////////////////////////
 public void displayMenu() {
+	
 	boolean menuOptions = true;
 	System.out.println("---------------------------------------");
 	System.out.println("Welcom to the revature Reimbursement System");
@@ -258,15 +264,16 @@ public void displayMenu() {
 		System.out.println("2 -> Finance Manager Portal");
 		System.out.println("0 -> Exit Application");
 		
-		int firstChoice = promptSelection(1,2,0);//lookthisup
-		switch(firstChoice) {
-		case 1:
-			handlePortal(Roles.Employee);
+	//int firstChoice = promptSelection(1,2,0);
+		String input = scan.nextLine();
+		switch(input) {
+		case "1":
+			em.displayEmployeeMenu(null);
 			break;
-		case 2:
-			handlePortal(Roles.Manager);
+		case "2":
+			mm.displayFinanceManagerMenu(null);
 			break;
-		case 0:
+		case "0":
 			System.out.println("\nHave a great day! Goodbye.");
 			menuOptions = false;
 			break;
@@ -308,7 +315,7 @@ break;
 }
 
 }
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 public void displayFinanceManagerMenu(Users manager) {
 boolean managerPortal = true;
 

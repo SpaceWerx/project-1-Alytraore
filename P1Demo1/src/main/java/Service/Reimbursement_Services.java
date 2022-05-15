@@ -4,14 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.Reimbursement;
+import Models.Roles;
 import Models.Status;
 import Models.Users;
+import Repository.Reimbursement_DAO;
 
 public class Reimbursement_Services {
 	
+	public Reimbursement_DAO reimbursement_DAO = new Reimbursement_DAO();
+	public User_Services user_Service = new User_Services();
+	
+	
+	 public List<Reimbursement> getPendingReimbursements() {
+		 return reimbursement_DAO.getByStatus(Status.Pending);
+		 
+	 }
+	
+	 public List<Reimbursement> getResolvedReimbursements(){
+		  List<Reimbursement> resolvedReimbursements = new ArrayList<>();
+		  
+		  resolvedReimbursements.addAll(reimbursement_DAO.getByStatus(Status.Approved));
+		  resolvedReimbursements.addAll(reimbursement_DAO.getByStatus(Status.Denied));
+		  
+		  return resolvedReimbursements;
+	 }
+	 
+	 public int submitReimbursement(Reimbursement reimbursementToBeSubmitted) {
+		 
+		 getUserServices();
+		 Users employee = User_Services.getUserById(reimbursementToBeSubmitted.getAuthor());
+		 
+		 if(employee.getRoles()!= Roles.Employee) {
+			 throw new IllegalArgumentException("Managers connaot submit reimbursement requests.");
+			 
+		 } else {
+			 reimbursementToBeSubmitted.setStatus(Status.Pending);
+			 return reimbursement_DAO.create(reimbursementToBeSubmitted);
+		 }
+	 }
+	 
     static List<Reimbursement> reimbursements = new ArrayList();
     
-	public void submitReimbursement(Reimbursement reimbursementToBeSubmitted) {
+	/*public void submitReimbursement(Reimbursement reimbursementToBeSubmitted) {
 		Reimbursement latestReimbursement = reimbursements.get(reimbursements.size() - 1);
 		int id = latestReimbursement.getId() + 1;// New ID is 1 higher than the previous highest
 		
@@ -63,25 +97,74 @@ public class Reimbursement_Services {
 		  }
 		return resolvedReimbursements;
 		
-	}
+	}*/
+    
+    public List<Reimbursement> getPendingReimbursements(List<Reimbursement> Pending) {
+    	return Pending;
+    }
 	
-	
-	public List<Reimbursement> getReimbursementsByAuthor(int userId){
+    public List<Reimbursement> getResolvedReimbursements(List<Reimbursement> Resolved) {
+    	return Resolved;
+    }
+    
+    public List<Reimbursement> getAllReimbursements(List<Reimbursement> reimbursement) {
+    	return reimbursement;
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////
+    
+	/*public List<Reimbursement> getReimbursementsByAuthor(int userId){
 		
 		 List<Reimbursement> userReimbursements = new ArrayList();
 
-		
 		for(Reimbursement reimbursement : reimbursements) {
 			if(reimbursement.getAuthor()== userId || reimbursement.getResolver()== userId) {
 				userReimbursements.add(reimbursement);
 			}
 		}
 		
-		
 		return userReimbursements;
 	
 
-}}
+}*/
+	
+	public Reimbursement update(Reimbursement unprocessedReimbursement, int resolverId, Status updatedStatus) {
+		Users manager = getUserServices().getUserById(resolverId);
+		
+		if(manager.getRoles() != Roles.Manager ) {
+			 throw new IllegalArgumentException("A employee connaot process reimbursement requests.");
+			
+			}else {
+				unprocessedReimbursement.setResolver(resolverId);
+				unprocessedReimbursement.setStatus(updatedStatus);
+				
+				reimbursement_DAO.update(unprocessedReimbursement);
+			}
+		return unprocessedReimbursement;
+	}
+	
+	public Reimbursement getReimbursementById(int id) {
+		return reimbursement_DAO.getReimbursementById(id);
+		
+		
+	}
+	public List<Reimbursement> getReimbursementsByAuthor(int userId){
+		return reimbursement_DAO.getReimbursementsByUser(userId);
+	}
+	
+	public User_Services getUserServices() {
+		return user_Service;
+		
+	}
+	
+	public void  setUserService(User_Services user_Service) {
+		this.user_Service = user_Service;
+	}
+	
+
+
+
+}
 
 	
 	
