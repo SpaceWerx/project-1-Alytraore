@@ -81,19 +81,19 @@ public void handlePortal(Roles role) {
 	System.out.println("0 -> Return to Main Menu");
 	System.out.println();
 	
+	
 	int userChoice = promptSelection(ids);
 	
 	if (userChoice == 0) {
 		return;
 	}
-	Users employee = User_Services.getUserById(userChoice);//change in userservice method body
-	
+	Users employee = User_Services.getUserById(userChoice);
 	if(role == Roles.Manager) {
 		System.out.println("Opening Manager Portal for " + employee.getUserName());
-		//displayFinanceManagerMenu(employee);
+		displayFinanceManagerMenu(employee);
 	} else {
 		System.out.println("Opening Employee Portal for " + employee.getUserName());
-		//displayEmployeeMenu(employee);
+		displayEmployeeMenu(employee);
 	}
 	
 }
@@ -108,7 +108,7 @@ System.out.println("No Previous Request..");
 System.out.println("Returning to Previous Menu...");
 }
 for (Reimbursement r : reimbursements) {
-System.out.println(r);
+System.out.println(r.getAuthor() + "" + r.getType() +"" + r.getDescription() + "" +r.getAmount() + "" + r.getStatus());
 }
 }
 ///////////////////////////////////////////////////////////////
@@ -264,16 +264,18 @@ public void displayMenu() {
 		System.out.println("2 -> Finance Manager Portal");
 		System.out.println("0 -> Exit Application");
 		
-	//int firstChoice = promptSelection(1,2,0);
-		String input = scan.nextLine();
-		switch(input) {
-		case "1":
-			em.displayEmployeeMenu(null);
+	int firstChoice = promptSelection(1,2,0);
+		//String input = scan.nextLine();
+		switch(firstChoice) {
+		case 1:
+			handlePortal(Roles.Employee);
+			//displayEmployeeMenu(null);
 			break;
-		case "2":
-			mm.displayFinanceManagerMenu(null);
+		case 2:
+			//displayFinanceManagerMenu(null);
+			handlePortal(Roles.Manager);
 			break;
-		case "0":
+		case 0:
 			System.out.println("\nHave a great day! Goodbye.");
 			menuOptions = false;
 			break;

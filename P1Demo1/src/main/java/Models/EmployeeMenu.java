@@ -6,7 +6,7 @@ public class EmployeeMenu {
 	
 	public void displayEmployeeMenu(Users employee) {
 		
-		Scanner scan = new Scanner(System.in);
+		/*Scanner scan = new Scanner(System.in);
 		boolean employeePortal = true;
 
 		System.out.println("---------------------------------------");
@@ -37,7 +37,7 @@ public class EmployeeMenu {
 		employeePortal = false;
 		break;
 		}
-		}
+		}*/
 
 		}
 

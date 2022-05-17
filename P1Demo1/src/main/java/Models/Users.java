@@ -1,8 +1,10 @@
 package Models;
 
 import Models.Roles;
+import mockdata.MockUserData;
 
 public class Users {
+	//MockUserData e = new MockUserData();
 	
 	private int Id;
 	private String userName;
@@ -28,6 +30,10 @@ public class Users {
 		Id = id;
 	}
 	public String getUserName() {
+		
+		
+		
+		
 		return userName;
 	}
 	public void setUserName(String userName) {

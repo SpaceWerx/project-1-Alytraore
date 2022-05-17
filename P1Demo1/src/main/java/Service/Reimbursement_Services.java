@@ -11,6 +11,8 @@ import Repository.Reimbursement_DAO;
 
 public class Reimbursement_Services {
 	
+	static List<Reimbursement> reimbursements = new ArrayList();
+	
 	public Reimbursement_DAO reimbursement_DAO = new Reimbursement_DAO();
 	public User_Services user_Service = new User_Services();
 	
@@ -43,7 +45,56 @@ public class Reimbursement_Services {
 		 }
 	 }
 	 
-    static List<Reimbursement> reimbursements = new ArrayList();
+    
+    
+    public Reimbursement update(Reimbursement unprocessedReimbursement, int resolverId, Status updatedStatus) {
+		getUserServices();
+		Users manager = User_Services.getUserById(resolverId);
+		
+		if(manager.getRoles() != Roles.Manager ) {
+			 throw new IllegalArgumentException("A employee connaot process reimbursement requests.");
+			
+			}else {
+				unprocessedReimbursement.setResolver(resolverId);
+				unprocessedReimbursement.setStatus(updatedStatus);
+				
+				reimbursement_DAO.update(unprocessedReimbursement);
+			}
+		return unprocessedReimbursement;
+	}
+	
+	public Reimbursement getReimbursementById(int id) {
+		return reimbursement_DAO.getReimbursementById(id);
+		
+		
+	}
+	public List<Reimbursement> getReimbursementsByAuthor(int userId){
+		return reimbursement_DAO.getReimbursementsByUser(userId);
+	}
+	
+	public User_Services getUserServices() {
+		return user_Service;
+		
+	}
+	
+	public void  setUserService(User_Services user_Service) {
+		this.user_Service = user_Service;
+	}
+	
+	 public List<Reimbursement> getPendingReimbursements(List<Reimbursement> Pending) {
+	    	return Pending;
+	    }
+		
+	    public List<Reimbursement> getResolvedReimbursements(List<Reimbursement> Resolved) {
+	    	return Resolved;
+	    }
+	    
+	    public List<Reimbursement> getAllReimbursements(List<Reimbursement> reimbursement) {
+	    	return reimbursement;
+	    }
+	
+
+
     
 	/*public void submitReimbursement(Reimbursement reimbursementToBeSubmitted) {
 		Reimbursement latestReimbursement = reimbursements.get(reimbursements.size() - 1);
@@ -99,17 +150,7 @@ public class Reimbursement_Services {
 		
 	}*/
     
-    public List<Reimbursement> getPendingReimbursements(List<Reimbursement> Pending) {
-    	return Pending;
-    }
-	
-    public List<Reimbursement> getResolvedReimbursements(List<Reimbursement> Resolved) {
-    	return Resolved;
-    }
-    
-    public List<Reimbursement> getAllReimbursements(List<Reimbursement> reimbursement) {
-    	return reimbursement;
-    }
+   
     
     ///////////////////////////////////////////////////////////////////////////////
     
@@ -127,39 +168,6 @@ public class Reimbursement_Services {
 	
 
 }*/
-	
-	public Reimbursement update(Reimbursement unprocessedReimbursement, int resolverId, Status updatedStatus) {
-		Users manager = getUserServices().getUserById(resolverId);
-		
-		if(manager.getRoles() != Roles.Manager ) {
-			 throw new IllegalArgumentException("A employee connaot process reimbursement requests.");
-			
-			}else {
-				unprocessedReimbursement.setResolver(resolverId);
-				unprocessedReimbursement.setStatus(updatedStatus);
-				
-				reimbursement_DAO.update(unprocessedReimbursement);
-			}
-		return unprocessedReimbursement;
-	}
-	
-	public Reimbursement getReimbursementById(int id) {
-		return reimbursement_DAO.getReimbursementById(id);
-		
-		
-	}
-	public List<Reimbursement> getReimbursementsByAuthor(int userId){
-		return reimbursement_DAO.getReimbursementsByUser(userId);
-	}
-	
-	public User_Services getUserServices() {
-		return user_Service;
-		
-	}
-	
-	public void  setUserService(User_Services user_Service) {
-		this.user_Service = user_Service;
-	}
 	
 
 

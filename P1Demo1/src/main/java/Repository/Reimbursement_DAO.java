@@ -26,8 +26,8 @@ public class Reimbursement_DAO {
 			
 			//writing out the (relatively complex) sql insert string to create a new  record
 			//we explicitly ask the database to return the new id after entry
-			String sql = "INSERT INTO ers_reimbursements (author, description, type, status, amount)"
-					+ "Values (?,?,?::type, ?::status.?)"
+			String sql = "INSERT INTO ers_reimbursements (author, description, reim_type, status, amount)"
+					+ "Values (?,?,?::reim_type, ?::status, ?)"
 					+"RETURNING ers_reimbursements.id";
 			
 			// We must use a prepared Statement because we have parameters
@@ -37,14 +37,13 @@ public class Reimbursement_DAO {
 			//the values will come from reimbursement object we use in
 			preparedStatement.setInt( 1, reimbursementToBeSubmitted.getAuthor());
 			preparedStatement.setString(2, reimbursementToBeSubmitted.getDescription());
-			preparedStatement.setObject(3, reimbursementToBeSubmitted.getType());
-			preparedStatement.setObject(4, reimbursementToBeSubmitted.getStatus());
+			preparedStatement.setObject(3, reimbursementToBeSubmitted.getType().name());
+			preparedStatement.setObject(4, reimbursementToBeSubmitted.getStatus().name());
 			preparedStatement.setDouble(5, reimbursementToBeSubmitted.getAmount());
 			
 			// we need to use the result set to retrieve the newly generated ID after entry of the new record
 			ResultSet resultSet;
 			
-			// Here, we are checking that the sql query execute and returned the reimbursement record with the new id 
 			if((resultSet = preparedStatement.executeQuery()) != null) {
 				// must call this to get the return reimbursement record id
 				resultSet.next();
@@ -105,8 +104,9 @@ public class Reimbursement_DAO {
 			//Preparing the sql statement to be execute once we fill the query parameters
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
+			preparedStatement.setInt(1, userId);
 			// Filling the missing query value (?) with the method parameter (userId)
-			ResultSet resultSet = preparedStatement.executeQuery(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			//Initializing a new Reimbursement array list to house and return with the data from the database
 			List<Reimbursement> reimbursements = new ArrayList<>();
@@ -121,11 +121,13 @@ public class Reimbursement_DAO {
 						resultSet.getInt("author"),
 						resultSet.getInt("resolver"),
 						resultSet.getString("description"),
-						Reimbursement_Type.valueOf(resultSet.getString("type")),
+						Reimbursement_Type.valueOf(resultSet.getString("reim_type")),
 						Status.valueOf(resultSet.getString("status")),
 						resultSet.getDouble("amount"))
 						);	
 			}
+			
+			return reimbursements;
 		
 		} catch (SQLException e) {
 			
@@ -166,7 +168,7 @@ public class Reimbursement_DAO {
 								resultSet.getInt("author"),
 								resultSet.getInt("resolver"),
 								resultSet.getString("description"),
-								Reimbursement_Type.valueOf(resultSet.getString("type")),
+								Reimbursement_Type.valueOf(resultSet.getString("reim_type")),
 								Status.valueOf(resultSet.getString("status")),
 								resultSet.getDouble("amount")
 								
@@ -219,7 +221,7 @@ public class Reimbursement_DAO {
 						resultSet.getInt("author"),
 						resultSet.getInt("resolver"),
 						resultSet.getString("description"),
-						Reimbursement_Type.valueOf(resultSet.getString("type")),
+						Reimbursement_Type.valueOf(resultSet.getString("reim_type")),
 						Status.valueOf(resultSet.getString("status")),
 						resultSet.getDouble("amount")
 						
@@ -266,7 +268,7 @@ public class Reimbursement_DAO {
 								resultSet.getInt("author"),
 								resultSet.getInt("resolver"),
 								resultSet.getString("description"),
-								Reimbursement_Type.valueOf(resultSet.getString("type")),
+								Reimbursement_Type.valueOf(resultSet.getString("reim_type")),
 								Status.valueOf(resultSet.getString("status")),
 								resultSet.getDouble("amount")
 								
