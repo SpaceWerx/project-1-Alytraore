@@ -9,19 +9,20 @@ import Models.Users;
 import Service.CLI_Menu_Service;
 import Service.User_Services;
 import io.javalin.Javalin;
+import io.javalin.core.JavalinConfig;
 
 public class Launcher {
+
 	public static void main(String[] args) {
-		
-		AuthController ac = new AuthController();
-		UserController uc = new UserController();
-		ReimbursementController rc = new ReimbursementController();
-		
 		
 		CLI_Menu_Service options = new CLI_Menu_Service();
 		options.displayMenu();
-		
-	Javalin app = Javalin.create(
+	}
+	
+	AuthController ac = new AuthController();
+	UserController uc = new UserController();
+	ReimbursementController rc = new ReimbursementController();
+	/*Javalin app = Javalin.create(
 				config -> {
 					config.enableCorsForAllOrigins(); //This is what allows teh server to process JS requests from anywhere
 				}
@@ -30,13 +31,56 @@ public class Launcher {
 			//Now we need our endpoints
 			//app.get("/employee", ec.getEmployeesHandler);
 			
-			//app.post("/employee", ec.insertEmployeesHandler);
+			//app.post("/employee", ec.insertEmployeesHandler);*/
 		
-	}
 	
-	/*public void start(int port) {
+	
+	
+	Javalin app = Javalin.create(JavalinConfig::enableCorsForAllOriginals).routes(()->{
+		
+		path("login", () ->{
+			
+			post(ac::handleLogin);
+		
+		});
+		
+		path("register", () ->{
+			
+			post(ac::handleRegister);	
+			
+		});
+		
+		path("users", () ->{
+			
+			get(uc::handleGetUsers);
+			
+			path("{id}", () ->{
+				get(uc::handleGetUserById);
+			});
+			
+		});
+		
+
+		path("reimbursements", () ->{
+			
+			get(rc::handleGetReimbursements);
+			
+			post(rc::handleSubmit);
+			
+			path("{id}", () ->{
+				
+				get(rc::handleGetReimbursementById);
+				
+				put(rc::handleProcess);
+			});
+			
+		});
+	});
+	
+	public void start(int port) {
 		this.app.start(port);
-	}*/
+	}
 }
+
 
 
