@@ -9,7 +9,7 @@ public class Auth_Services {
 	 * After registration, the id will be a positive integer.
 	 **/
 	// making a new user object
-	public int register(Users userToBeRegistered) {
+	public static int register(Users userToBeRegistered) {
 		
 		// checking if the username already exists in the database 
 		// if the method returns null, the username is available
@@ -29,7 +29,7 @@ public class Auth_Services {
 	 * 
 	 * @return Users object
 	 */
-	public Users login(String username, String password) {
+	public static Users login(String username, String password) {
 		
 		// Instantiating a temporary user
 		Users user;
