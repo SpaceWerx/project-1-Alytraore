@@ -23,7 +23,7 @@ public class User_Services {
 	static List<Users> users = new ArrayList();
 	
 	
-	public Users getByUsersName(String userName) {
+	public static Users getByUsersName(String userName) {
 		return User_DAO.getByUserName(userName);
 		
 	}
@@ -71,7 +71,7 @@ public class User_Services {
 		return null;
 	}
 	 
-	 public void idExists(int Id) {
+	 * public void idExists(int Id) {
 		for(Users user : users) {
 			if(user.getId()==Id) {
 				System.out.println("The Id already exists");

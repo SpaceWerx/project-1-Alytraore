@@ -2,7 +2,12 @@ package Controller;
 
 import java.util.Objects;
 
+import org.eclipse.jetty.server.Authentication.User;
+
+import com.google.gson.Gson;
+
 import Models.Users;
+import Repository.User_DAO;
 import Service.Auth_Services;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -10,9 +15,13 @@ import io.javalin.http.HttpCode;
 
 public class AuthController {
 
-	public void handleRegister(Context ctx) {
+	
+	Users user = new Users();
+	
+	public Handler handleRegister(Context ctx) {
+		return null;
 		
-		try {
+		/*try {
 			String input = ctx.body();
 			
 			ObjectMapper mapper = new ObjectMapper();
@@ -35,9 +44,10 @@ public class AuthController {
 			}
 			
 			e.printStackTrace();
-		}
+		}*/
+		
 	}
-	public void handleLogin(Context ctx) {
+	public Handler handleLogin(Context ctx) {
 		
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
@@ -52,17 +62,27 @@ public class AuthController {
 			if(user != null ) {
 				
 				ctx.status(HttpCode.ACCEPTED);
-				ctx.header("Access-contol-Expose-Headers", "Current-User");
-				ctx.header("Current-User", + user.getId());
-				
 				ctx.result(user.getRoles().toString());
 			}else {
 				ctx.status(HttpCode.BAD_REQUEST);
 				ctx.result("Invalid Credentials");
 			}
 		}
+		return null;
 		
 		
 	}
+	
+	/*String body = ctx.body();
+	Gson gson = new Gson();
+	
+	 user = gson.fromJson(body, Users.class);
+	
+	
+	if(as.login(user.getUserName(), user.getPassword()) != null) {
+		ctx.status(HttpCode.ACCEPTED);
+		ctx.result(user.getRoles().toString());
+		}*/
+		
 
 }

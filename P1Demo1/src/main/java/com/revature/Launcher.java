@@ -31,14 +31,15 @@ public class Launcher {
 			).start(3000);
 		
 			//Now we need our endpoints
-			app.post("/login", ac.handleLogin);
+			app.post("/login", ac.handleLogin(null));
 			
-			app.post("/register", ac.handleRegister);
+			app.post("/register", ac.handleRegister(null));
 			
 			
             app.get("/Users", uc.handleGetUsers);
 			
 			app.post("/{id}", uc.handleGetUserById);
+			app.post("/Users", uc.handleGetByUserName);
 			
             app.get("/Reimbursement", rc.handleGetReimbursements);
 			
