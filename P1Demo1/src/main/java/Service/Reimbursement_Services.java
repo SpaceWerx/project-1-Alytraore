@@ -13,7 +13,7 @@ public class Reimbursement_Services {
 	
 	static List<Reimbursement> reimbursements = new ArrayList();
 	
-	public Reimbursement_DAO reimbursement_DAO = new Reimbursement_DAO();
+	public static Reimbursement_DAO reimbursement_DAO = new Reimbursement_DAO();
 	public User_Services user_Service = new User_Services();
 	
 	
@@ -63,7 +63,7 @@ public class Reimbursement_Services {
 		return unprocessedReimbursement;
 	}
 	
-	public Reimbursement getReimbursementById(int id) {
+	public static Reimbursement getReimbursementById(int id) {
 		return reimbursement_DAO.getReimbursementById(id);
 		
 		

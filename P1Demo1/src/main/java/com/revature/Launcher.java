@@ -31,9 +31,9 @@ public class Launcher {
 			).start(3000);
 		
 			//Now we need our endpoints
-			app.post("/login", ac.handleLogin());
+			//app.post("/login", ac.handleLogin());
 			
-			app.post("/register", ac.handleRegister(null));
+			//app.post("/register", ac.handleRegister(null));
 			
 			
             app.get("/Users", uc.handleGetUsers);
