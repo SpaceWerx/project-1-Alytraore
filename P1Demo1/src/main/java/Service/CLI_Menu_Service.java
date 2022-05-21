@@ -178,10 +178,10 @@ if(pendingReimbursements.isEmpty()) {
 System.out.println("No Pending Requests...");
 System.out.println("Returning to Previous Menu...");
 }
-for(Reimbursement r : pendingReimbursements) {
-System.out.println(r);
+//for(Reimbursement r : pendingReimbursements) {
+//System.out.println(r);
 }
-}
+
 
 ///////////////////////////////////////////////
 public void displayResolvedReimbursements() {
@@ -191,10 +191,10 @@ if(resolvedReimbursements.isEmpty()) {
 System.out.println("No Resolved Requests...");
 System.out.println("Returning to Previous Menu...");
 }
-for(Reimbursement r: resolvedReimbursements) {
-System.out.println(r);
+//for(Reimbursement r: resolvedReimbursements) {
+	//System.out.println(r);
 }
-}
+
 
 //////////////////////////////////////////////
 public void processReimbursement(Users manager) {

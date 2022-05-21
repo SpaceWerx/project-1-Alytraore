@@ -11,7 +11,7 @@ import io.javalin.http.Handler;
 public class UserController {
 
 	User_Services us = new User_Services();
-	private List<Users> user;
+	Users user;
 	public Handler handleGetUsers = (ctx) ->{
 	
 	//This does not work anymore like it was intended to, do not use this		
@@ -22,7 +22,7 @@ public class UserController {
 //		ctx.status(401);
 //	}
 		
-	List<Users> allUsers = us.getAllUsers(user);
+	List<Users> allUsers = us.getAllUsers();
 	
 	Gson gson = new Gson();
 	

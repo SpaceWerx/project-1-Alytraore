@@ -192,10 +192,26 @@ public class Reimbursement_DAO {
 	}
 	public List<Reimbursement> getByStatus(Status status){
 		//try-catch block to catch sql exception that can be thrown with connection 
-		try(Connection connection = ConnectionFactoryUtility.getConnection()){
+		
 			
+			List<Reimbursement> byStatus = new ArrayList<>();
+			for(Reimbursement r: getAllReimbursement()) {
+				if(r.getStatus() == status) {
+					byStatus.add(r);
+				}
+			}
+			
+			for(Reimbursement bs: byStatus) {
+				System.out.println(bs.getAuthor() + "" + bs.getType() + "" + bs.getDescription() + "" + bs.getStatus() + "" + bs.getAmount());
+				
+				
+			}
+			return byStatus;
+	}
+			
+			/*try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			//Write the query that we meant to send to the database and assign it to a string
-			String sql = "select * from ers_reimbursements WHERE status = ?::status";
+			/*String sql = "select * from ers_reimbursements WHERE status = ?::status";
 			
 			//Put the SQL query into a statement object (The Connection object has a method for this!! implicit?)
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -243,7 +259,9 @@ public class Reimbursement_DAO {
 		
 		return null;
 		
-	}
+	}*/
+	
+	
 	public List<Reimbursement> getAllReimbursement(){
 		
 		// try-catch block to catch sql exception that can be thrown with connection 

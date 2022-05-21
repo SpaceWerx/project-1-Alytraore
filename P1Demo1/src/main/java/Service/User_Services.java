@@ -28,7 +28,7 @@ public class User_Services {
 		
 	}
 	
-	public List<Users> getAllUsers(List<Users> users) {
+	public List<Users> getAllUsers() {
 		return User_DAO.getAllUsers();
 	}
 	
