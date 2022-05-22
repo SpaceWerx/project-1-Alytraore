@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import Models.Users;
 import Service.User_Services;
 import io.javalin.http.Handler;
+import io.javalin.http.HttpCode;
 
 public class UserController {
 
@@ -49,14 +50,21 @@ public class UserController {
 	
 	public Handler handleGetUserById = (ctx) ->{
 		
-	String idParam = ctx.pathParam("id");
+	String body = ctx.body();
 	
-	int id = Integer.parseInt(idParam);
-    Users userId = User_Services.getUserById(id);
+	int id = Integer.parseInt(body);
+    user = User_Services.getUserById(id);
 	
+    /*if(user != null) {
+    	ctx.status(HttpCode.OK);
+    	ctx.json(user);
+    }else {
+    	ctx.status(HttpCode.BAD_REQUEST);
+    	ctx.result(" COULD NOT RETRIEVE THE USER");
+    }*/
 	Gson gson = new Gson();
 	
-	String JSONObject = gson.toJson(userId);
+	String JSONObject = gson.toJson(user);
 	
 	ctx.result(JSONObject);
 	ctx.status(200);

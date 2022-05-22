@@ -38,17 +38,22 @@ public class Launcher {
 			
             app.get("/Users", uc.handleGetUsers);
 			
-			app.post("/id", uc.handleGetUserById);
-			app.post("/username", uc.handleGetByUserName);
+			app.get("/userid", uc.handleGetUserById);
+			app.get("/username", uc.handleGetByUserName);
 			
-            app.get("/Reimbursement", rc.handleGetReimbursements);
+            
 			
 			app.post("/submit", rc.handleSubmit);
+			app.post("/process", rc.handleProcess);
 			
+			app.get("/Reimbursement", rc.handleGetReimbursements);
 
             app.get("/{id}", rc.handleGetReimbursementById);
+            app.get("/status", rc.handleGetReimbursementByStatus);
+            app.get("/author", rc.handleGetReimbursementByAuthor);
 			
-			app.post("/process", rc.handleProcess);
+			
+			
 			
 			
 			

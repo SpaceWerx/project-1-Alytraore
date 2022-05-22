@@ -8,6 +8,7 @@ import Models.Reimbursement;
 import Models.Status;
 import Models.Users;
 import Service.Reimbursement_Services;
+import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpCode;
 
@@ -48,8 +49,8 @@ public class ReimbursementController {
 	};
 	
 	public Handler handleGetReimbursementById = (ctx) ->{
-		String idParam = ctx.pathParam("id");
-		int id = Integer.parseInt(idParam);
+		String body = ctx.body();
+		int id = Integer.parseInt(body);
 		Reimbursement reimId = Reimbursement_Services.getReimbursementById(id);
 		
 		Gson gson = new Gson();
@@ -88,7 +89,35 @@ public class ReimbursementController {
 		}
 	
 	};
+
+
+	
+	
+
+	public Handler handleGetReimbursementByStatus = (ctx) ->{
+		String statusParam = ctx.queryParam("status");
+		int id = Integer.parseInt(statusParam);
+		Status status = Status.valueOf(statusParam);
+		
+		List<Reimbursement> reimId = Reimbursement_Services.getReimbursementsByAuthor(id);
+		
+		Gson gson = new Gson();
+		String JSONObject = gson.toJson(reimId);
+		
+		if(status == Status.Pending) {
+			ctx.status(HttpCode.OK);
+			ctx.json(Reimbursement_Services.getPendingReimbursements());
+			
+		}else {
+			ctx.status(HttpCode.OK);
+			ctx.result(JSONObject);
+		}
+	
+	};
+
+	public Handler handleGetReimbursementByAuthor;
 }
+
 	
 	
 			

@@ -17,12 +17,12 @@ public class Reimbursement_Services {
 	public static User_Services user_Service = new User_Services();
 	
 	
-	 public List<Reimbursement> getPendingReimbursements() {
+	 public static List<Reimbursement> getPendingReimbursements() {
 		 return reimbursement_DAO.getByStatus(Status.Pending);
 		 
 	 }
 	
-	 public List<Reimbursement> getResolvedReimbursements(){
+	 public static List<Reimbursement> getResolvedReimbursements(){
 		  List<Reimbursement> resolvedReimbursements = new ArrayList<>();
 		  
 		  resolvedReimbursements.addAll(reimbursement_DAO.getByStatus(Status.Approved));
@@ -68,7 +68,7 @@ public class Reimbursement_Services {
 		
 		
 	}
-	public List<Reimbursement> getReimbursementsByAuthor(int userId){
+	public static List<Reimbursement> getReimbursementsByAuthor(int userId){
 		return reimbursement_DAO.getReimbursementsByUser(userId);
 	}
 	
@@ -78,7 +78,7 @@ public class Reimbursement_Services {
 	}
 	
 	public void  setUserService(User_Services user_Service) {
-		this.user_Service = user_Service;
+		Reimbursement_Services.user_Service = user_Service;
 	}
 	
 	 public List<Reimbursement> getPendingReimbursements(List<Reimbursement> Pending) {

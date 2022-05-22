@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.eclipse.jetty.server.Authentication.User;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import Models.Users;
@@ -18,10 +19,10 @@ public class AuthController {
 	
 	Users user = new Users();
 	
-	public Handler handleRegister(Context ctx) {
-		return null;
+	public void handleRegister(Context ctx) {
 		
-		/*try {
+		
+		try {
 			String input = ctx.body();
 			
 			ObjectMapper mapper = new ObjectMapper();
@@ -44,10 +45,10 @@ public class AuthController {
 			}
 			
 			e.printStackTrace();
-		}*/
+		}
 		
 	}
-	public Handler handleLogin(Context ctx) {
+	public void handleLogin(Context ctx) {
 		
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
@@ -68,21 +69,10 @@ public class AuthController {
 				ctx.result("Invalid Credentials");
 			}
 		}
-		return null;
+	
 		
 		
 	}
 	
-	/*String body = ctx.body();
-	Gson gson = new Gson();
 	
-	 user = gson.fromJson(body, Users.class);
-	
-	
-	if(as.login(user.getUserName(), user.getPassword()) != null) {
-		ctx.status(HttpCode.ACCEPTED);
-		ctx.result(user.getRoles().toString());
-		}*/
-		
-
 }
