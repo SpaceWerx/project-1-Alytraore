@@ -9,17 +9,17 @@ import Models.Users;
 import Service.CLI_Menu_Service;
 import Service.User_Services;
 import io.javalin.Javalin;
-import io.javalin.core.JavalinConfig;
+//import io.javalin.core.JavalinConfig;
 
 public class Launcher {
 
 	public static void main(String[] args) {
 		
-		CLI_Menu_Service options = new CLI_Menu_Service();
-		options.displayMenu();
+		//CLI_Menu_Service options = new CLI_Menu_Service();
+		//options.displayMenu();
 	
 	
-	AuthController ac = new AuthController();
+	//AuthController ac = new AuthController();
 	UserController uc = new UserController();
 	ReimbursementController rc = new ReimbursementController();
 	
@@ -38,17 +38,17 @@ public class Launcher {
 			
             app.get("/Users", uc.handleGetUsers);
 			
-			app.post("/{id}", uc.handleGetUserById);
-			app.post("/Users", uc.handleGetByUserName);
+			app.post("/id", uc.handleGetUserById);
+			app.post("/username", uc.handleGetByUserName);
 			
             app.get("/Reimbursement", rc.handleGetReimbursements);
 			
-			app.post("/Reimbursement", rc.handleSubmit);
+			app.post("/submit", rc.handleSubmit);
 			
 
             app.get("/{id}", rc.handleGetReimbursementById);
 			
-			app.post("/{id}", rc.handleProcess);
+			app.post("/process", rc.handleProcess);
 			
 			
 			

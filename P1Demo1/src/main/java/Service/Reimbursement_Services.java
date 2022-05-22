@@ -14,7 +14,7 @@ public class Reimbursement_Services {
 	static List<Reimbursement> reimbursements = new ArrayList();
 	
 	public static Reimbursement_DAO reimbursement_DAO = new Reimbursement_DAO();
-	public User_Services user_Service = new User_Services();
+	public static User_Services user_Service = new User_Services();
 	
 	
 	 public List<Reimbursement> getPendingReimbursements() {
@@ -31,7 +31,7 @@ public class Reimbursement_Services {
 		  return resolvedReimbursements;
 	 }
 	 
-	 public int submitReimbursement(Reimbursement reimbursementToBeSubmitted) {
+	 public static int submitReimbursement(Reimbursement reimbursementToBeSubmitted) {
 		 
 		 getUserServices();
 		 Users employee = User_Services.getUserById(reimbursementToBeSubmitted.getAuthor());
@@ -47,7 +47,7 @@ public class Reimbursement_Services {
 	 
     
     
-    public Reimbursement update(Reimbursement unprocessedReimbursement, int resolverId, Status updatedStatus) {
+    public static Reimbursement update(Reimbursement unprocessedReimbursement, int resolverId, Status updatedStatus) {
 		getUserServices();
 		Users manager = User_Services.getUserById(resolverId);
 		
@@ -72,7 +72,7 @@ public class Reimbursement_Services {
 		return reimbursement_DAO.getReimbursementsByUser(userId);
 	}
 	
-	public User_Services getUserServices() {
+	public static User_Services getUserServices() {
 		return user_Service;
 		
 	}
