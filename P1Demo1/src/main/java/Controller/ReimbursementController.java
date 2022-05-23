@@ -8,6 +8,7 @@ import Models.Reimbursement;
 import Models.Status;
 import Models.Users;
 import Service.Reimbursement_Services;
+import Service.User_Services;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpCode;
@@ -16,10 +17,10 @@ public class ReimbursementController {
 	Reimbursement_Services rs = new Reimbursement_Services();
 
 	public Handler handleGetReimbursements = (ctx) ->{
-		String idParam = ctx.pathParam("id");
-		int id = Integer.parseInt(idParam);
+		String body= ctx.body();
+		int id = Integer.parseInt(body);
 		
-		List<Reimbursement> reimAuthor = rs.getReimbursementsByAuthor(id);
+		List<Reimbursement> reimAuthor = Reimbursement_Services.getReimbursementsByAuthor(id);
 		
 		Gson gson = new Gson();
 		
@@ -94,12 +95,35 @@ public class ReimbursementController {
 	
 	
 
-	public Handler handleGetReimbursementByStatus = (ctx) ->{
-		String statusParam = ctx.queryParam("status");
-		int id = Integer.parseInt(statusParam);
-		Status status = Status.valueOf(statusParam);
+	public Handler handleGetReimbursementByAuthor = (ctx) ->{
+		String idParam = ctx.queryParam("author");
+		int id = Integer.parseInt(idParam);
 		
-		List<Reimbursement> reimId = Reimbursement_Services.getReimbursementsByAuthor(id);
+		
+		
+		
+		
+		//Gson gson = new Gson();
+		//String JSONObject = gson.toJson(reimId);
+		
+		if(User_Services.idExists(id)) {
+			ctx.status(HttpCode.OK);
+			ctx.json(Reimbursement_Services.getReimbursementsByAuthor(id));
+			
+			
+		}else {
+			ctx.status(HttpCode.NOT_FOUND);
+			ctx.result(" Unable to retrieve reimbursements, current user is not in the database");
+		}
+	
+	};
+
+	public Handler handleGetReimbursementByStatus = (ctx) ->{
+		String authParam = ctx.body();
+		int id = Integer.parseInt(authParam);
+		Status status = Status.valueOf(authParam);
+		
+		List<Reimbursement> reimId = Reimbursement_Services.getReimbursementsByStatus(status);
 		
 		Gson gson = new Gson();
 		String JSONObject = gson.toJson(reimId);
@@ -113,9 +137,9 @@ public class ReimbursementController {
 			ctx.result(JSONObject);
 		}
 	
+	
 	};
-
-	public Handler handleGetReimbursementByAuthor;
+	
 }
 
 	

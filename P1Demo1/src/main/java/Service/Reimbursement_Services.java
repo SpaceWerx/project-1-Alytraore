@@ -72,6 +72,9 @@ public class Reimbursement_Services {
 		return reimbursement_DAO.getReimbursementsByUser(userId);
 	}
 	
+	public static List<Reimbursement> getReimbursementsByStatus(Status status){
+		return reimbursement_DAO.getByStatus(status);
+	}
 	public static User_Services getUserServices() {
 		return user_Service;
 		

@@ -28,7 +28,7 @@ public class Launcher {
 				config -> {
 					config.enableCorsForAllOrigins(); //This is what allows teh server to process JS requests from anywhere
 				}
-			).start(3000);
+			).start(4000);
 		
 			//Now we need our endpoints
 			//app.post("/login", ac.handleLogin());

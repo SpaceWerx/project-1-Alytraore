@@ -33,7 +33,7 @@ public class User_Services {
 	}
 	
 	
-	public void idExists(int Id) {
+	public static boolean idExists(int Id) {
 	Users user = User_DAO.getUserId(Id);
 	
 	if(user != null) {
@@ -41,6 +41,7 @@ public class User_Services {
 	} else {
 		System.out.println("Id does not exist");
 	}
+	return false;
  	
 		
 	}

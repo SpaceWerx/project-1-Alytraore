@@ -19,10 +19,10 @@ public class AuthController {
 	
 	Users user = new Users();
 	
-	public void handleRegister(Context ctx) {
+	public Handler handleRegister = (ctx) ->{
 		
 		
-		try {
+		
 			String input = ctx.body();
 			
 			ObjectMapper mapper = new ObjectMapper();
@@ -37,7 +37,8 @@ public class AuthController {
 				ctx.status(HttpCode.CREATED);
 				ctx.result("Registration successful.");
 			}
-		} catch(Exception e) {
+		}; 
+	/*catch(Exception e) {
 			ctx.status(HttpCode.INTERNAL_SERVER_ERROR);
 			
 			if(!e.getMessage().isEmpty()) {
@@ -47,8 +48,8 @@ public class AuthController {
 			e.printStackTrace();
 		}
 		
-	}
-	public void handleLogin(Context ctx) {
+	}*/
+	public Handler handleLogin = (ctx) ->{
 		
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
@@ -72,7 +73,8 @@ public class AuthController {
 	
 		
 		
-	}
+	};
 	
 	
 }
+

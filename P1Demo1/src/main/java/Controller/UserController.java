@@ -72,7 +72,7 @@ public class UserController {
 	
 	public Handler handleGetByUserName = (ctx) ->{
 		
-		String usernameParam = ctx.pathParam("username");
+		String usernameParam = ctx.body();
 		
 		Users name = User_Services.getByUsersName(usernameParam);
 			
