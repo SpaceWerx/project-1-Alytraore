@@ -7,110 +7,116 @@
     <title>Employee Portal</title>
 
     <!-- Bootstrap 5 reference stylesheet -->
+    
     <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbr CEXSU1oBoqy12QvZ6jIW3"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
     crossorigin="anonymous"
-    />
-    <!-- Respective CSS stylesheet reference -->
+/>
+<!--bootstrap classes cheatsheet-->
+<!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
     <link href="./Employee.css" rel="stylesheet" />
-    <!-- Favicon setup with reference -->
-    <link rel="icon" type="image/x-icon" href="./favicon.png">
+
+
+    <link rel="icon" type="'image/x-icon" href="favicon.png">
 </head>
+
 <body>
 
-<header>
-    <!-- Navbar class from bootstrap documentation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
-        <!-- wrapper div for styling -->
-        <div id="nav" class="container">
-            <!-- Revature Logo display on left of navbar -->
-            <img src="./rev-logo.png" alt="revature logo">
-            <div class="d-flex">
-                <!-- Bootstrap button class -->
-                
-                <a id="logout-anchor" href="login.html">
-                    <button class = "btn btn-outline-success">
-                        Logout
-                    </button>
-                   </a>
+    <header>
+
+        <nav class="navbar navbar-expand-1g navbar-dark fixed-top scrolling-navbar">
+
+            <div id="nav" class="container">
+
+                <img src="rev-logo.png" alt="revature logo">
+
+                    <div class="d-flex">
+
+                        <a id="logout-anchor" href="login.html">
+                             <button  type ="button" class="btn btn-outline-success">
+                                Logout 
+                             </button>
+                        </a>
+                        
+                    </div>
             </div>
+        </nav>
+    </header>
+
+    <div id="main">
+
+        <div id="bg">
+            <img src="main-background.jpg" alt="tech background">
         </div>
-    </nav>  
-</header>
-<!-- Wrapper div for styling -->
-<div id="main">
-    <!-- Background image wrapper div for styling -->
-    <div id="bg">
-        <!-- Background image refence with alt-text -->
-        <img src="./main-background.jpg" alt="tech background">
-    </div>
-    <!-- Sectional div for content styling -->
-    <div id="display">
-        <!-- H2 Title for the sectional content -->
-        <h2 id="display-title">Employee Portal</h2>
-    </div>
-        <!-- Wrapper div for styling -->
-        <div id="display-buttons">
-            <!-- Bootstrap button to submit new reimbursement-->
-            <button  class="btn btn-outline-dark">
-                <a id="submit-anchor" href="./Submit.html">
-                  Submit Reimbursement 
-                </a>  
-            </button>
-          
+
+        <div id="display">
+
+            <h2 id="display-title">Employee Portal</h2>
+
+            <div id="display-buttons">
+               
+                <a id="submit-anchor" href="Submit.html">
+                    <button class="btn butn-outline-dark">
+                        Submit Reimbursement
+                    </button>
+                </a>
+               
+            </div>
+
+            <table id="display-table" class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <tg scope="col">ID</tg>
+                        <tg scope="col">Type</tg>
+                        <tg scope="col">Description</tg>
+                        <tg scope="col">Amount</tg>
+                        <tg scope="col">Status</tg>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+
+                        <td>Lodging</td>
+                        <td>Hotel stay in Orlando</td>
+                        <td>$500.00</td>
+                        <td>Pending</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Travel</td>
+                        <td>Flights to Orlando</td>
+                        <td>$1000.00</td>
+                        <td>Approved</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Food</td>
+                        <td>Dinner in Orlando</td>
+                        <td>$200.00</td>
+                        <td>Denied</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Other</td>
+                        <td>Beach trip with team</td>
+                        <td>$700.00</td>
+                        <td>Denied</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    <!-- Bootstrap table with mock data for styling -->
-    <table id="display-table" class="table table-striped">
-        <!-- Thead establishes column names -->
-        <thead>
-            <!-- Tr is a single record -->
-            <tr>
-                <!-- Th is table header with column scope-->
-                <th scope="col">ID</th>
-                <th scope="col">Type</th>
-                <th scope="col">Description</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
-            </tr>
-        </thead>
-    <!-- Tbody contains the rows of data -->
-    <tbody>
-        <!-- Tr is a single record -->
-        <tr>
-            <!-- Table header with scope row denote primary identifier for record -->
-            <th scope="row">1</th>
-            <!-- Td is just table data in the order of the respective columns -->
-            <td>Lodging</td>
-            <td>Hotel stay in Orlando</td>
-            <td>$588.88</td>
-            <td>Pending</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Travel</td>
-            <td>Flights to Orlando</td>
-            <td>$1800.00</td>
-            <td>Approved</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Food</td>
-            <td>Dinner in Orlando</td>
-            <td>$288.88</td>
-            <td>Denied</td>
-        </tr>
-        <tr>
-            <th scope="row">4</th>
-            <td>0ther</td>
-            <td>Beach trip with team</td>
-            <td>$758.88</td>
-            <td>Denied</td>
-        </tr>
-    </tbody>
-    </table>
     </div>
-</div>       
+
+
 </body>
+
+
+
+
+
 </html>

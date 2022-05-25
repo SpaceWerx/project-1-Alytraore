@@ -15,33 +15,34 @@
     
     <link href="./Submit.css" rel="stylesheet" />
     <!-- Favicon setup -->
-    <link rel="icon" type="image/x-icon" href="../FrontEnd/favicon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 <body>
    <header>
     <!-- Navbar class from bootstrap documentation --> 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
-        <!-- wrapper div for styling --> 
+ 
         <div id="nav" class="container">
             <!-- Revature Logo display on Left of navbar --> 
-            <img src="../FrontEnd/rev-logo.png" alt="revature logo"> 
+            <img src="rev-logo.png" alt="revature logo"> 
             <div class="d-flex">
                 <!-- Bootstrap button class --> 
-                <button class="btn btn-outline-success">
-                    id="logout-anchor" href="../login/login.html">
-                    Logout
-             
-                </button> 
+               
+                <a id="logout-anchor" href="./login.html">
+                    <button type = button class="btn btn-outline-success">
+                        Logout
+                    </button> 
+                </a>
             </div> 
         </div> 
     </nav> 
 </header>
  <div id="main">
     <div id="bg">
-        <img src="../FrondEnd/main-background.jpg" alt="tech background">
+        <img src="main-background.jpg" alt="tech background">
     </div>
     <div id="display">
-        <ch2 id="display-title">Reimbursement Submission Forn</h2>
+        <ch2 id="display-title">Reimbursement Submission Form</h2>
         <div class="form-container">
     <!-- Bootstrap fore with inputs for new submissions --> 
             <form id="display-form">
@@ -76,10 +77,12 @@
                     <!-- Wrapper div to separate the buttons --> 
                     <div class="btn-group me-2" role="group" aria-label="First group">
               
-                        <button id="back-button" class="btn btn-outline-danger"
-                            id="back-anchor" href="./Employee.html">
-                            Back 
-                        </button> 
+                        
+                        <a id="back-anchor" href="./Employee.html">
+                            <button id="back-button" class="btn btn-outline-danger">
+                                Back 
+                            </button> 
+                        </a>
                     </div>
                     <!-- Wrapper div to separate the buttons --> 
                     <div class="btn-group me-2" role="group" aria-Label="Second group">
