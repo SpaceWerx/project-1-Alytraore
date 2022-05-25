@@ -1,0 +1,14 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-msedge",
+            "request": "launch",
+            "name": "Open Employee.html",
+            "file": "c:\\Users\\Aly\\Documents\\Revature Training\\P1\\project-1-Alytraore\\P1Demo1\\FrontEnd\\Employee.html"
+        }
+    ]
+}

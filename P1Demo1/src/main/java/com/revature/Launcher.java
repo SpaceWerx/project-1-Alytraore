@@ -17,9 +17,10 @@ public class Launcher {
 		
 		//CLI_Menu_Service options = new CLI_Menu_Service();
 		//options.displayMenu();
+		//options. 
 	
 	
-	//AuthController ac = new AuthController();
+	AuthController ac = new AuthController();
 	UserController uc = new UserController();
 	ReimbursementController rc = new ReimbursementController();
 	
@@ -31,9 +32,9 @@ public class Launcher {
 			).start(4000);
 		
 			//Now we need our endpoints
-			//app.post("/login", ac.handleLogin());
+			app.post("/login", ac.handleLogin);
 			
-			//app.post("/register", ac.handleRegister(null));
+			app.post("/register", ac.handleRegister);
 			
 			
             app.get("/Users", uc.handleGetUsers);

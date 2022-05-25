@@ -120,7 +120,7 @@ public class ReimbursementController {
 
 	public Handler handleGetReimbursementByStatus = (ctx) ->{
 		String authParam = ctx.body();
-		int id = Integer.parseInt(authParam);
+		//int id = Integer.parseInt(authParam);
 		Status status = Status.valueOf(authParam);
 		
 		List<Reimbursement> reimId = Reimbursement_Services.getReimbursementsByStatus(status);

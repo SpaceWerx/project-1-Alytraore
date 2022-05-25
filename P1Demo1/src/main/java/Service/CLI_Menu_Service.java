@@ -101,7 +101,7 @@ public void handlePortal(Roles role) {
 /////////////////////////////////////////////////////////
 public void displayPreviousRequest(Users employee) {
 
-List<Reimbursement> reimbursements = rService.getReimbursementsByAuthor(employee.getId());
+List<Reimbursement> reimbursements = Reimbursement_Services.getReimbursementsByAuthor(employee.getId());
 
 if(reimbursements.isEmpty()) {
 System.out.println("No Previous Request..");
@@ -168,11 +168,11 @@ valid = true;
 
 }
 }
-rService.submitReimbursement(reimbursementToBeSubmitted);
+Reimbursement_Services.submitReimbursement(reimbursementToBeSubmitted);
 }
 /////////////////////////////////////////////
 public void displayPendingReimbursements() {
-List<Reimbursement> pendingReimbursements = rService.getPendingReimbursements();
+List<Reimbursement> pendingReimbursements = Reimbursement_Services.getPendingReimbursements();
 
 if(pendingReimbursements.isEmpty()) {
 System.out.println("No Pending Requests...");
@@ -185,7 +185,7 @@ System.out.println("Returning to Previous Menu...");
 
 ///////////////////////////////////////////////
 public void displayResolvedReimbursements() {
-List<Reimbursement> resolvedReimbursements = rService.getResolvedReimbursements();
+List<Reimbursement> resolvedReimbursements = Reimbursement_Services.getResolvedReimbursements();
 
 if(resolvedReimbursements.isEmpty()) {
 System.out.println("No Resolved Requests...");
@@ -205,7 +205,7 @@ System.out.println("---------------------------------------");
 System.out.println();
 
 while(processPortal) {
-List<Reimbursement> reimbursements = rService.getPendingReimbursements();
+List<Reimbursement> reimbursements = Reimbursement_Services.getPendingReimbursements();
 
 if (reimbursements.isEmpty()) {
 System.out.println("There are no reimbursemetns to process.");
@@ -223,7 +223,7 @@ ids[i] = r.getId();
 System.out.println("Please enter the ID of the Reimbursement you wish to process.");
 
 int selection = promptSelection(ids);
-Reimbursement reimbursementToBeProcessed = rService.getReimbursementById(selection);
+Reimbursement reimbursementToBeProcessed = Reimbursement_Services.getReimbursementById(selection);
 System.out.println("Processing reimbursement #" + reimbursementToBeProcessed.getId());
 System.out.println("Details\nAuthor: " + User_Services.getUserById(reimbursementToBeProcessed.getAuthor()).getUserName()
 + "\nAmount: " + reimbursementToBeProcessed.getAmount()
@@ -234,7 +234,7 @@ System.out.println("2 -> Deny");
 
 int decision = promptSelection(1, 2);
 Status status = (decision == 1) ? Status.Approved : Status.Denied;
-rService.update(reimbursementToBeProcessed, manager.getId(), status);
+Reimbursement_Services.update(reimbursementToBeProcessed, manager.getId(), status);
 
 System.out.println("Would you like to process anohter reimbursement?");
 System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
