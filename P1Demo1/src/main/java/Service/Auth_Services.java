@@ -10,17 +10,19 @@ public class Auth_Services {
 	 * After registration, the id will be a positive integer.
 	 **/
 	// making a new user object
-	public static int register(Users userToBeRegistered) {
+	
+	User_DAO userDAO = new User_DAO();
+	public int register(Users userToBeRegistered) {
 		
 	
-		if(User_DAO.getByUserName(userToBeRegistered.getUserName()) != null){
+		if(userDAO.getByUserName(userToBeRegistered.getUserName()) != null){
 			
 			 // Throws new NullPointerException("Username already taken");
 		}
 		
 		// take in the user object sent from the menu and send it to the user_DAO to be inserted into the database
 		//After the entry has been made, the ID of the new user is immediately return
-		return User_DAO.create(userToBeRegistered);
+		return userDAO.create(userToBeRegistered);
 		
 	}
 	
@@ -29,10 +31,10 @@ public class Auth_Services {
 	 * 
 	 * @return Users object
 	 */
-	public static int login(String username, String password) {
+	public  int login(String username, String password) {
 		Users user;
 		try {
-			user = User_DAO.getByUserName(username);
+			user = userDAO.getByUserName(username);
 			if(user != null && password.equals(user.getPassword()) && user.getRoles()== Roles.Manager) {
 				
 				System.out.println("Logged In Successfully as Manager");

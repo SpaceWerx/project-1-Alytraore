@@ -47,19 +47,19 @@ public class Reimbursement_Services {
 	 
     
     
-    public static Reimbursement update(Reimbursement unprocessedReimbursement, int resolverId, Status updatedStatus) {
-		getUserServices();
-		Users manager = User_Services.getUserById(resolverId);
+    public static Reimbursement update(Reimbursement unprocessedReimbursement) {
+		//getUserServices();
+		//Users manager = User_Services.getUserById(resolverId);
 		
-		if(manager.getRoles() != Roles.Manager ) {
-			 throw new IllegalArgumentException("A employee connaot process reimbursement requests.");
+		//if(manager.getRoles() != Roles.Manager ) {
+			// throw new IllegalArgumentException("A employee connaot process reimbursement requests.");
 			
-			}else {
-				unprocessedReimbursement.setResolver(resolverId);
-				unprocessedReimbursement.setStatus(updatedStatus);
+			//}else {
+				//unprocessedReimbursement.setResolver(resolverId);
+				//unprocessedReimbursement.setStatus(updatedStatus);
 				
 				reimbursement_DAO.update(unprocessedReimbursement);
-			}
+			
 		return unprocessedReimbursement;
 	}
 	

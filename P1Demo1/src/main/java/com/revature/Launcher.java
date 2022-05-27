@@ -29,18 +29,19 @@ public class Launcher {
 				config -> {
 					config.enableCorsForAllOrigins(); //This is what allows teh server to process JS requests from anywhere
 				}
-			).start(4000);
+			).start(8000);
 		
 			//Now we need our endpoints
 			app.post("/login", ac.handleLogin);
-			app.post("/register", ac.handleRegister);
+			//app.post("/register", ac.handleRegister);
 			
 			app.get("/user", uc.handleGetUsers);
+			app.post("/user", uc.insertEmployeesHandler);
 			app.get("/userid", uc.handleGetUserById);
 			app.get("/username", uc.handleGetByUserName);
 			
 			app.post("/submit", rc.handleSubmit);
-			app.post("/process", rc.handleProcess);
+			app.put("/process", rc.handleProcess);
 			app.get("/Reimbursement", rc.handleGetReimbursements);
 			app.get("/Reimbursement/{id}", rc.handleGetReimbursementById);
             app.get("/status", rc.handleGetReimbursementByStatus);
@@ -57,50 +58,6 @@ public class Launcher {
 	}
 	
 	
-	/*Javalin app = Javalin.create(JavalinConfig::enableCorsForAllOriginals).routes(()->{
-		
-		path("login", () ->{
-			
-			post(ac::handleLogin);
-		
-		});
-		
-		path("register", () ->{
-			
-			post(ac::handleRegister);	
-			
-		});
-		
-		path("users", () ->{
-			
-			get(uc::handleGetUsers);
-			
-			path("{id}", () ->{
-				get(uc::handleGetUserById);
-			});
-			
-		});
-		
-
-		path("reimbursements", () ->{
-			
-			get(rc::handleGetReimbursements);
-			
-			post(rc::handleSubmit);
-			
-			path("{id}", () ->{
-				
-				get(rc::handleGetReimbursementById);
-				
-				put(rc::handleProcess);
-			});
-			
-		});
-	});
-	
-	public void start(int port) {
-		this.app.start(port);
-	}*/
 
 
 

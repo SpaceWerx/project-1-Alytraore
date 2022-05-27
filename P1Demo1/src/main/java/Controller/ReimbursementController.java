@@ -65,34 +65,21 @@ public class ReimbursementController {
 	};
 	public Handler handleProcess = (ctx) ->{
 		
-		String authHeader = ctx.header("Current-User");
+		String body= ctx.body();
+		Gson gson = new Gson();
+		Reimbursement reimbursement = gson.fromJson(body, Reimbursement.class);
+		int id = reimbursement.getResolver();
 		
-		if(authHeader != null) {
-			
-			int userId = Integer.parseInt(authHeader);
-				
-				String reimbursementIdInput = ctx.pathParam("id");
-				
-				int id = Integer.parseInt(reimbursementIdInput);
-				
-				String statusInput = ctx.formParam("status");
-				
-				Reimbursement reimbursement = Reimbursement_Services.getReimbursementById(id);
-				
-				if(reimbursement != null) {
-				
-					Reimbursement processedReimbursement = Reimbursement_Services.update (reimbursement, userId, Status.valueOf(statusInput));
-				
-					ctx.status(HttpCode.ACCEPTED);
-					ctx.json(processedReimbursement);
-					
+		Reimbursement processedReimbursement = Reimbursement_Services.update(reimbursement);
+		if(processedReimbursement != null){
+				ctx.status(HttpCode.ACCEPTED);	
 				} else {
 					ctx.status (HttpCode.BAD_REQUEST);
 					ctx.result("Reimbursement processing was not successful");
 					}
-		}
+		};
 	
-	};
+	
 	public Handler handleGetReimbursementByAuthor = (ctx) ->{
 		
 		int id = Integer.parseInt(ctx.pathParam("author"));

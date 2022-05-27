@@ -1,10 +1,13 @@
 package Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.management.relation.Role;
+
+import org.eclipse.jetty.server.Authentication.User;
 
 import Models.Roles;
 import Models.Users;
@@ -15,7 +18,7 @@ public class User_Services {
 	private Users user;
 	
 	
-	User_DAO user_DAO = new User_DAO();
+	static User_DAO user_DAO = new User_DAO();
 	
 	
 	
@@ -24,7 +27,7 @@ public class User_Services {
 	
 	
 	public static Users getByUsersName(String userName) {
-		return User_DAO.getByUserName(userName);
+		return user_DAO.getByUserName(userName);
 		
 	}
 	
@@ -34,13 +37,13 @@ public class User_Services {
 	
 	
 	public static boolean idExists(int Id) {
-	Users user = User_DAO.getUserId(Id);
-	
-	if(user != null) {
-		System.out.println("Id exist");
-	} else {
-		System.out.println("Id does not exist");
-	}
+//	Users user = User_DAO.getUserId(Id);
+//	
+//	if(user != null) {
+//		System.out.println("Id exist");
+//	} else {
+//		System.out.println("Id does not exist");
+//	}
 	return false;
  	
 		
@@ -57,10 +60,17 @@ public class User_Services {
 		
 	}
 	
-	public static Users getUserById(int userChoice) {
-		return User_DAO.getUserId(userChoice);	
+	public static Users getUserById(int id) {
+		return user_DAO.getUserId(id);	
 }
 
+	public int addUser(Users employee) throws SQLException{
+		
+		return user_DAO.create(employee);
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 	/*public Users getByUsersName(String UserName) {
 		

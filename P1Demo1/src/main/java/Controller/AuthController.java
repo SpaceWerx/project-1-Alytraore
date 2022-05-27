@@ -19,26 +19,26 @@ Auth_Services as = new Auth_Services();
 	
 	Users user = new Users();
 	
-	public Handler handleRegister = (ctx) ->{
-		
-		
-		
-			String input = ctx.body();
-			
-			ObjectMapper mapper = new ObjectMapper();
-			Users user = mapper.readValue(input, Users.class);
-			
-			int id = Auth_Services.register(user);
-			
-			if(id == 0) {
-				ctx.status(HttpCode.INTERNAL_SERVER_ERROR);
-				ctx.result("Registration unsuccessful.");	
-			}else {
-				ctx.status(HttpCode.CREATED);
-				ctx.result("Registration successful.");
-			}
-		}; 
-	
+//	public Handler handleRegister = (ctx) ->{
+//		
+//		
+//		
+//			String input = ctx.body();
+//			
+//			ObjectMapper mapper = new ObjectMapper();
+//			Users user = mapper.readValue(input, Users.class);
+//			
+//			int id = as.register(user);
+//			
+//			if(id == 0) {
+//				ctx.status(HttpCode.INTERNAL_SERVER_ERROR);
+//				ctx.result("Registration unsuccessful.");	
+//			}else {
+//				ctx.status(HttpCode.CREATED);
+//				ctx.result("Registration successful.");
+//			}
+//		}; 
+//	
 	public Handler handleLogin = (ctx) ->{
 		
 		String body = ctx.body();
@@ -46,11 +46,11 @@ Auth_Services as = new Auth_Services();
 		Gson gson = new Gson();
 		Users login = gson.fromJson(body, Users.class);
 		System.out.println(login.getUserName());
-		if(Auth_Services.login(login.getUserName(), login.getPassword())==1) {
+		if(as.login(login.getUserName(), login.getPassword())==1) {
 			
 			ctx.status(201);
 			ctx.result("Manager Login successful");
-		}else if(Auth_Services.login(login.getUserName(), login.getPassword())==2) {
+		}else if(as.login(login.getUserName(), login.getPassword())==2) {
 				ctx.status(202);
 				ctx.result("Employee Login successful");
 			}else {

@@ -2,9 +2,12 @@ package Controller;
 
 import java.util.List;
 
+import org.eclipse.jetty.server.Authentication.User;
+
 import com.google.gson.Gson;
 
 import Models.Users;
+import Repository.User_DAO;
 import Service.User_Services;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpCode;
@@ -12,6 +15,7 @@ import io.javalin.http.HttpCode;
 public class UserController {
 
 	User_Services us = new User_Services();
+	User_DAO userDAO = new User_DAO();
 	Users user;
 	public Handler handleGetUsers = (ctx) ->{
 		
@@ -23,22 +27,24 @@ public class UserController {
 	
 	ctx.result(JSONObject);
 	ctx.status(200);
+	};
 	
-	/*public Handler insertEmployeesHandler = (ctx) ->{
+	public Handler insertEmployeesHandler = (ctx) ->{
 		String body = ctx.body();
 		
 		Gson gson = new Gson();
 		
-		Employee employee = gson.fromJson(body, Employee.class);
-		
-		es.addEmployee(employee);
+		Users employee = gson.fromJson(body, Users.class);
+		System.out.println(employee.getUserName());
+		//us.addUser(employee);
+		userDAO.create(employee);
 		
 		ctx.result("Employee successfully added!");
 		ctx.status(201);
 		
-	};*/
-
 	};
+
+	
 	
 	public Handler handleGetUserById = (ctx) ->{
 		
@@ -67,6 +73,11 @@ public class UserController {
 			
 			ctx.result(JSONObject);
 			ctx.status(200);
-			};
+	};
+
+
+	
+
 
 }
+

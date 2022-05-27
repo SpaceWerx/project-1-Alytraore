@@ -16,6 +16,7 @@ import Models.Users;
 public class CLI_Menu_Service {
 	
 	Reimbursement_Services rService = new Reimbursement_Services();
+	User_Services userServices = new User_Services();
 	ManagerMenu mm = new ManagerMenu();
 	EmployeeMenu em = new EmployeeMenu();
 	Auth_Services au = new Auth_Services();
@@ -205,7 +206,7 @@ System.out.println("---------------------------------------");
 System.out.println();
 
 while(processPortal) {
-List<Reimbursement> reimbursements = Reimbursement_Services.getPendingReimbursements();
+List<Reimbursement> reimbursements = rService.getPendingReimbursements();
 
 if (reimbursements.isEmpty()) {
 System.out.println("There are no reimbursemetns to process.");
@@ -215,7 +216,7 @@ return;
 int[] ids = new int[reimbursements.size()];
 for (int i = 0; i< reimbursements.size(); i++) {
 Reimbursement r = reimbursements.get(i);
-Users author = User_Services.getUserById(r.getAuthor());
+Users author = userServices.getUserById(r.getAuthor());
 System.out.println(r.getId() + " -> " + author.getUserName() + " : $" + r.getAmount());
 ids[i] = r.getId();
 }
@@ -223,9 +224,9 @@ ids[i] = r.getId();
 System.out.println("Please enter the ID of the Reimbursement you wish to process.");
 
 int selection = promptSelection(ids);
-Reimbursement reimbursementToBeProcessed = Reimbursement_Services.getReimbursementById(selection);
+Reimbursement reimbursementToBeProcessed = rService.getReimbursementById(selection);
 System.out.println("Processing reimbursement #" + reimbursementToBeProcessed.getId());
-System.out.println("Details\nAuthor: " + User_Services.getUserById(reimbursementToBeProcessed.getAuthor()).getUserName()
+System.out.println("Details\nAuthor: " + userServices.getUserById(reimbursementToBeProcessed.getAuthor()).getUserName()
 + "\nAmount: " + reimbursementToBeProcessed.getAmount()
 + "\nDescription: " + reimbursementToBeProcessed.getDescription());
 System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");
@@ -234,7 +235,7 @@ System.out.println("2 -> Deny");
 
 int decision = promptSelection(1, 2);
 Status status = (decision == 1) ? Status.Approved : Status.Denied;
-Reimbursement_Services.update(reimbursementToBeProcessed, manager.getId(), status);
+rService.update(reimbursementToBeProcessed);
 
 System.out.println("Would you like to process anohter reimbursement?");
 System.out.println("PLEASE ENTER THE NUMBER OF YOUR CHOICE");

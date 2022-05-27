@@ -17,7 +17,7 @@ import Utilities.ConnectionFactoryUtility;
 
 public class User_DAO {
 	
-	public static Users getUserId( int Id) {
+	public Users getUserId( int Id) {
 		
 		try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			
@@ -46,7 +46,7 @@ public class User_DAO {
 }
 //////////////////////////////////////////////////////////////////////////				
 	
-	public static Users getByUserName(String userName) {
+	public Users getByUserName(String userName) {
 try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			//System.out.println(userName);
 			//System.out.println("aly");
@@ -72,17 +72,17 @@ try(Connection connection = ConnectionFactoryUtility.getConnection()){
 			return null;
 	}
 	////////////////////////////////////////////////////////////////////////////////////////
-	public static int create(Users user) {
+	public  int create(Users user) {
 		try(Connection connection = ConnectionFactoryUtility.getConnection()){
 		
 			String sql = "INSERT INTO ers_users (username, password, role)"
-					+ "values (?,?,?::type, ?::role.?"
+					+ "VALUES(?,?,?::role)"
 					+ "RETURNING ers_users.id";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
-			preparedStatement.setString( 1, user.getUserName());
+			preparedStatement.setString(1, user.getUserName());
 			preparedStatement.setString(2, user.getPassword());
-			preparedStatement.setObject(3, user.getRoles());
+			preparedStatement.setObject(3, user.getRoles().name());
 			
 			ResultSet resultSet;
 			

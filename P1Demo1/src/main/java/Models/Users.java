@@ -23,6 +23,13 @@ public class Users {
 		this.password = password;
 		this.role = role;
 	}
+	public Users( String userName, String password, Roles role) {
+		super();
+		
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+	}
 	public int getId() {
 		return Id;
 	}
