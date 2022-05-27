@@ -14,14 +14,6 @@ public class UserController {
 	User_Services us = new User_Services();
 	Users user;
 	public Handler handleGetUsers = (ctx) ->{
-	
-	//This does not work anymore like it was intended to, do not use this		
-//	if(ctx.req.getSession(false) != null) {
-//		
-//	}
-//	else {
-//		ctx.status(401);
-//	}
 		
 	List<Users> allUsers = us.getAllUsers();
 	
@@ -55,13 +47,6 @@ public class UserController {
 	int id = Integer.parseInt(body);
     user = User_Services.getUserById(id);
 	
-    /*if(user != null) {
-    	ctx.status(HttpCode.OK);
-    	ctx.json(user);
-    }else {
-    	ctx.status(HttpCode.BAD_REQUEST);
-    	ctx.result(" COULD NOT RETRIEVE THE USER");
-    }*/
 	Gson gson = new Gson();
 	
 	String JSONObject = gson.toJson(user);

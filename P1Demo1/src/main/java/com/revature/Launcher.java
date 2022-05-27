@@ -9,7 +9,7 @@ import Models.Users;
 import Service.CLI_Menu_Service;
 import Service.User_Services;
 import io.javalin.Javalin;
-//import io.javalin.core.JavalinConfig;
+import io.javalin.core.JavalinConfig;
 
 public class Launcher {
 
@@ -33,25 +33,18 @@ public class Launcher {
 		
 			//Now we need our endpoints
 			app.post("/login", ac.handleLogin);
-			
 			app.post("/register", ac.handleRegister);
 			
-			
-            app.get("/Users", uc.handleGetUsers);
-			
+			app.get("/user", uc.handleGetUsers);
 			app.get("/userid", uc.handleGetUserById);
 			app.get("/username", uc.handleGetByUserName);
 			
-            
-			
 			app.post("/submit", rc.handleSubmit);
 			app.post("/process", rc.handleProcess);
-			
 			app.get("/Reimbursement", rc.handleGetReimbursements);
-
-            app.get("/{id}", rc.handleGetReimbursementById);
+			app.get("/Reimbursement/{id}", rc.handleGetReimbursementById);
             app.get("/status", rc.handleGetReimbursementByStatus);
-            app.get("/author", rc.handleGetReimbursementByAuthor);
+            app.get("/author/{author}", rc.handleGetReimbursementByAuthor);
 			
 			
 			

@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import Models.Reimbursement;
 import Models.Status;
 import Models.Users;
+import Repository.Reimbursement_DAO;
 import Service.Reimbursement_Services;
 import Service.User_Services;
 import io.javalin.http.Context;
@@ -17,10 +18,10 @@ public class ReimbursementController {
 	Reimbursement_Services rs = new Reimbursement_Services();
 
 	public Handler handleGetReimbursements = (ctx) ->{
-		String body= ctx.body();
-		int id = Integer.parseInt(body);
+		//String body= ctx.body();
+
 		
-		List<Reimbursement> reimAuthor = Reimbursement_Services.getReimbursementsByAuthor(id);
+	List<Reimbursement> reimAuthor = Reimbursement_DAO.getAllReimbursement();
 		
 		Gson gson = new Gson();
 		
@@ -31,9 +32,11 @@ public class ReimbursementController {
 		
 	};
 	public Handler handleSubmit = (ctx) ->{
+		String body = ctx.body();
+		Gson gson = new Gson();
 		
 		
-		Reimbursement reimbursement = new Reimbursement();
+		Reimbursement reimbursement = gson.fromJson(body, Reimbursement.class);
 		
 		int id = Reimbursement_Services.submitReimbursement(reimbursement);
 		
@@ -50,8 +53,8 @@ public class ReimbursementController {
 	};
 	
 	public Handler handleGetReimbursementById = (ctx) ->{
-		String body = ctx.body();
-		int id = Integer.parseInt(body);
+	
+		int id = Integer.parseInt(ctx.pathParam("id"));
 		Reimbursement reimId = Reimbursement_Services.getReimbursementById(id);
 		
 		Gson gson = new Gson();
@@ -90,31 +93,25 @@ public class ReimbursementController {
 		}
 	
 	};
-
-
-	
-	
-
 	public Handler handleGetReimbursementByAuthor = (ctx) ->{
-		String idParam = ctx.queryParam("author");
-		int id = Integer.parseInt(idParam);
 		
+		int id = Integer.parseInt(ctx.pathParam("author"));
+		System.out.println(id);
 		
+		List<Reimbursement> rId =Reimbursement_Services.getReimbursementsByAuthor(id);
 		
-		
-		
-		//Gson gson = new Gson();
-		//String JSONObject = gson.toJson(reimId);
-		
-		if(User_Services.idExists(id)) {
-			ctx.status(HttpCode.OK);
-			ctx.json(Reimbursement_Services.getReimbursementsByAuthor(id));
-			
-			
-		}else {
-			ctx.status(HttpCode.NOT_FOUND);
-			ctx.result(" Unable to retrieve reimbursements, current user is not in the database");
-		}
+		Gson gson = new Gson();
+		String JSONObject = gson.toJson(rId);
+		ctx.status(HttpCode.OK);
+		ctx.result(JSONObject);
+	
+//		if(User_Services.idExists(id)) {
+//			ctx.status(HttpCode.OK);
+//			ctx.json(Reimbursement_Services.getReimbursementsByAuthor(id));	
+//		}else {
+//			ctx.status(HttpCode.NOT_FOUND);
+//			ctx.result(" Unable to retrieve reimbursements, current user is not in the database");
+//		}
 	
 	};
 
@@ -128,9 +125,10 @@ public class ReimbursementController {
 		Gson gson = new Gson();
 		String JSONObject = gson.toJson(reimId);
 		
-		if(status == Status.Pending) {
+		if(reimId != null) {
+			ctx.result(JSONObject);
 			ctx.status(HttpCode.OK);
-			ctx.json(Reimbursement_Services.getPendingReimbursements());
+			//ctx.json(Reimbursement_Services.getPendingReimbursements());
 			
 		}else {
 			ctx.status(HttpCode.OK);

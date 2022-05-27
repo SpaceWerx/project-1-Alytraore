@@ -48,8 +48,9 @@ public class User_DAO {
 	
 	public static Users getByUserName(String userName) {
 try(Connection connection = ConnectionFactoryUtility.getConnection()){
-			
-			String sql = "select * from ers_users WHERE userName = ?";
+			//System.out.println(userName);
+			//System.out.println("aly");
+			String sql = "select * from ers_users WHERE username = ?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, userName);

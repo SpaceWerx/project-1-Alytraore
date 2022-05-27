@@ -64,51 +64,33 @@
                 </a>
                
             </div>
-
+            <div id="tableRow" class="row">
+                
             <table id="display-table" class="table table-striped">
 
                 <thead>
                     <tr>
-                        <tg scope="col">ID</tg>
-                        <tg scope="col">Type</tg>
-                        <tg scope="col">Description</tg>
-                        <tg scope="col">Amount</tg>
-                        <tg scope="col">Status</tg>
+                        <th scope="col">ID</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Resolver</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
                     </tr>
+
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-
-                        <td>Lodging</td>
-                        <td>Hotel stay in Orlando</td>
-                        <td>$500.00</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Travel</td>
-                        <td>Flights to Orlando</td>
-                        <td>$1000.00</td>
-                        <td>Approved</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Food</td>
-                        <td>Dinner in Orlando</td>
-                        <td>$200.00</td>
-                        <td>Denied</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Other</td>
-                        <td>Beach trip with team</td>
-                        <td>$700.00</td>
-                        <td>Denied</td>
-                    </tr>
+                <tbody id = reimBody>
+                    
                 </tbody>
+
             </table>
+            </div>
+            <a id="reimbursement-anchor" >
+                <button id="getReimbursement" class="btn butn-outline-dark">
+                    Get All Reimbursments
+                </button>
+            </a>
         </div>
     </div>
 
@@ -116,7 +98,7 @@
 </body>
 
 
-
+<script src="Employee.js"></script>
 
 
 </html>

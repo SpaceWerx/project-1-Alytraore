@@ -15,7 +15,7 @@ import io.javalin.http.Handler;
 import io.javalin.http.HttpCode;
 
 public class AuthController {
-
+Auth_Services as = new Auth_Services();
 	
 	Users user = new Users();
 	
@@ -38,42 +38,30 @@ public class AuthController {
 				ctx.result("Registration successful.");
 			}
 		}; 
-	/*catch(Exception e) {
-			ctx.status(HttpCode.INTERNAL_SERVER_ERROR);
-			
-			if(!e.getMessage().isEmpty()) {
-				ctx.result(e.getMessage());
-			}
-			
-			e.printStackTrace();
-		}
-		
-	}*/
+	
 	public Handler handleLogin = (ctx) ->{
 		
-		String username = ctx.formParam("username");
-		String password = ctx.formParam("password");
+		String body = ctx.body();
 		
-		if(Objects.equals(username, "") || Objects.equals(password, "")) {
+		Gson gson = new Gson();
+		Users login = gson.fromJson(body, Users.class);
+		System.out.println(login.getUserName());
+		if(Auth_Services.login(login.getUserName(), login.getPassword())==1) {
 			
-			ctx.status(HttpCode.BAD_REQUEST);
-			ctx.result("Invalid Credentials");
-		}else {
-			Users user = Auth_Services.login(username, password);
-			
-			if(user != null ) {
-				
-				ctx.status(HttpCode.ACCEPTED);
-				ctx.result(user.getRoles().toString());
+			ctx.status(201);
+			ctx.result("Manager Login successful");
+		}else if(Auth_Services.login(login.getUserName(), login.getPassword())==2) {
+				ctx.status(202);
+				ctx.result("Employee Login successful");
 			}else {
-				ctx.status(HttpCode.BAD_REQUEST);
+				ctx.status(401);
 				ctx.result("Invalid Credentials");
 			}
-		}
+		};
 	
 		
 		
-	};
+	
 	
 	
 }

@@ -262,7 +262,7 @@ public class Reimbursement_DAO {
 	}*/
 	
 	
-	public List<Reimbursement> getAllReimbursement(){
+	public static List<Reimbursement> getAllReimbursement(){
 		
 		// try-catch block to catch sql exception that can be thrown with connection 
 		try(Connection connection = ConnectionFactoryUtility.getConnection()){

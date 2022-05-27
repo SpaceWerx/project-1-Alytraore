@@ -1,7 +1,7 @@
-const url = "http://localhost:3000/";
+const url = "http://localhost:4000/";
 // Your projects will replace localhost with your AWS endpoint
 
-document.getElementById("getEmployeeButton").addEventListener("click",getEmployees);
+
 document.getElementById("loginButton").addEventListener("click",loginFunction);
 
 
@@ -57,13 +57,13 @@ async function getEmployees(){
 }
 
 async function loginFunction(){
-    let usern = document.getElementById("username").value;
+    let usern = document.getElementById("userName").value;
     let userp = document.getElementById("password").value;
     console.log(usern);
     console.log(userp);
     //This is us making our user JSON object, so that we can send it to our database
     let user = {
-        username: usern,
+        userName: usern,
         password: userp
     }
 
